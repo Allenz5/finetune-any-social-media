@@ -6,10 +6,6 @@
     <link rel="stylesheet" href="./popup.css" />
   </head>
   <body>
-    <header>
-      <h1>Finetune</h1>
-    </header>
-
     <!-- Section 1: Platform -->
     <section class="section">
       <h2 class="section-title">Platform</h2>
@@ -18,7 +14,10 @@
           <span class="platform-logo">in</span>
           <span class="platform-name">LinkedIn</span>
         </div>
-        <span class="status-pill" id="platform-status">Detecting…</span>
+        <div class="platform-right">
+          <span class="status-pill" id="platform-status">Detecting…</span>
+          <button class="btn-reload" id="btn-reload-platform" title="Refresh">↻</button>
+        </div>
       </div>
     </section>
 
@@ -58,6 +57,26 @@
       </div>
 
       <p class="empty-hint" id="empty-hint">No campaigns yet. Create one to get started.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 3: Settings -->
+    <section class="section">
+      <h2 class="section-title">Settings</h2>
+      <label class="field-label" for="input-api-key">OpenAI API key</label>
+      <div class="api-key-row">
+        <input
+          class="input"
+          type="password"
+          id="input-api-key"
+          placeholder="sk-..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="btn-save" id="btn-save-api-key">Save</button>
+      </div>
+      <p class="api-key-hint" id="api-key-hint"></p>
     </section>
 
     <script type="module" src="./popup.ts"></script>

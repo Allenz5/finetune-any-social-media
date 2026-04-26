@@ -1,5 +1,11 @@
 export type Action = 'like' | 'dislike' | 'skip';
 
+export interface LogEntry {
+  timestamp: number;
+  status: 'info' | 'success' | 'error';
+  message: string;
+}
+
 export interface Post {
   id: string;
   author: string;
@@ -8,9 +14,6 @@ export interface Post {
 
 export interface PlatformAdapter {
   readonly name: string;
-
-  isLoggedIn(): Promise<boolean>;
-  awaitLogin(timeoutMs?: number): Promise<void>;
 
   getNextPost(): Promise<Post | null>;
   like(): Promise<void>;
