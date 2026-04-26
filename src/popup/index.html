@@ -6,15 +6,60 @@
     <link rel="stylesheet" href="./popup.css" />
   </head>
   <body>
-    <main>
-      <h1>Finetune Social Media</h1>
-      <section class="card">
-        <h2>LinkedIn</h2>
-        <p>Status: <strong id="status">Checking…</strong></p>
-        <p class="hint" id="hint"></p>
-        <button id="open">Open LinkedIn feed</button>
-      </section>
-    </main>
+    <header>
+      <h1>Finetune</h1>
+    </header>
+
+    <!-- Section 1: Platform -->
+    <section class="section">
+      <h2 class="section-title">Platform</h2>
+      <div class="platform-row">
+        <div class="platform-badge">
+          <span class="platform-logo">in</span>
+          <span class="platform-name">LinkedIn</span>
+        </div>
+        <span class="status-pill" id="platform-status">Detecting…</span>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Section 2: Campaigns -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Campaigns</h2>
+        <button class="btn-new" id="btn-new-campaign">+ New</button>
+      </div>
+
+      <!-- Create form (hidden by default) -->
+      <div class="campaign-form" id="campaign-form" hidden>
+        <input
+          class="input"
+          type="text"
+          id="input-campaign-name"
+          placeholder="Campaign name"
+          maxlength="60"
+        />
+        <textarea
+          class="textarea"
+          id="input-campaign-prompt"
+          placeholder="Describe how the AI should react to posts…"
+          rows="4"
+        ></textarea>
+        <div class="form-actions">
+          <button class="btn-secondary" id="btn-cancel-campaign">Cancel</button>
+          <button class="btn-primary" id="btn-create-campaign">Create</button>
+        </div>
+      </div>
+
+      <!-- Campaign list -->
+      <div class="campaign-list" id="campaign-list">
+        <!-- Populated by popup.ts -->
+      </div>
+
+      <p class="empty-hint" id="empty-hint">No campaigns yet. Create one to get started.</p>
+    </section>
+
     <script type="module" src="./popup.ts"></script>
   </body>
 </html>

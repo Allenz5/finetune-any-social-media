@@ -6,8 +6,10 @@ export default defineManifest({
   version: '0.1.0',
   description: 'Shape your LinkedIn feed with an AI agent that reacts to posts.',
   action: {
-    default_popup: 'src/popup/index.html',
     default_title: 'Finetune Social Media',
+  },
+  side_panel: {
+    default_path: 'src/popup/index.html',
   },
   background: {
     service_worker: 'src/background/service-worker.ts',
@@ -20,6 +22,6 @@ export default defineManifest({
       run_at: 'document_idle',
     },
   ],
-  permissions: ['storage', 'tabs'],
+  permissions: ['storage', 'tabs', 'sidePanel'],
   host_permissions: ['https://www.linkedin.com/*'],
 });
