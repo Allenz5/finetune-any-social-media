@@ -1,0 +1,53 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #111;
+}
+
+body {
+  width: 320px;
+  margin: 0;
+  padding: 16px;
+  background: #fafafa;
+}
+
+h1 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+h2 {
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+
+p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+.hint {
+  color: #666;
+  font-size: 12px;
+}
+
+button {
+  margin-top: 12px;
+  padding: 6px 12px;
+  font-size: 13px;
+  border: 1px solid #0a66c2;
+  background: #0a66c2;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #084d92;
+}
