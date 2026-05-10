@@ -1,6 +1,6 @@
-import { LinkedInAdapter } from './linkedin-adapter';
-import { CampaignRunner } from '../lib/campaign-runner';
-import type { LogEntry } from '../lib/adapters/types';
+import { registerLinkedInTools } from './tools';
+import { CampaignRunner } from '../../lib/campaign-runner';
+import type { LogEntry } from '../../lib/tools/types';
 
 interface Campaign {
   id: string;
@@ -8,6 +8,8 @@ interface Campaign {
   prompt: string;
   running: boolean;
 }
+
+registerLinkedInTools();
 
 const runners = new Map<string, CampaignRunner>();
 
@@ -25,7 +27,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     const campaign = msg.campaign as Campaign;
     if (!runners.has(campaign.id)) {
       const log = createLogger(campaign.id);
-      const runner = new CampaignRunner(new LinkedInAdapter(), campaign.prompt, log);
+      const runner = new CampaignRunner('linkedin', campaign.prompt, log);
       runners.set(campaign.id, runner);
       runner.run().catch(err => log('error', String(err)));
     }

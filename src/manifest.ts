@@ -18,7 +18,7 @@ export default defineManifest({
   content_scripts: [
     {
       matches: ['https://www.linkedin.com/*'],
-      js: ['src/content/linkedin.ts'],
+      js: ['src/platforms/linkedin/index.ts'],
       run_at: 'document_idle',
     },
   ],
