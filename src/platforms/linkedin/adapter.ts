@@ -1,19 +1,13 @@
-import type { PlatformAdapter, Post } from '../lib/adapters/types';
+import type { Post } from '../../lib/tools/types';
 
-// Action button labels that mark the end of a post's body text
 const ACTION_LABELS = new Set(['Like', 'Comment', 'Repost', 'Send']);
-
-// Lines to skip in the post header (between author and body)
 const HEADER_SKIP = /^(\d[\d,]*\s*(followers?|connections?)|promoted|following|•|\d+[smhd]w?)/i;
 
-export class LinkedInAdapter implements PlatformAdapter {
-  readonly name = 'linkedin';
-
+export class LinkedInAdapter {
   private processedIds = new Set<string>();
   private currentElement: Element | null = null;
 
   async getNextPost(): Promise<Post | null> {
-    // Each feed post has data-display-contents="true" and innerText starting with "Feed post"
     const candidates = document.querySelectorAll<HTMLElement>('[data-display-contents="true"]');
 
     for (const el of candidates) {
@@ -24,17 +18,11 @@ export class LinkedInAdapter implements PlatformAdapter {
       if (this.processedIds.has(id)) continue;
 
       const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
-      // lines[0] = "Feed post" (aria label)
-      // lines[1] = author name
-      // lines[2..] = followers count, promoted, etc., then post body
-
       const author = lines[1] ?? 'Unknown';
 
-      // Skip header noise (follower counts, "Promoted", timestamps, etc.)
       let i = 2;
       while (i < lines.length && HEADER_SKIP.test(lines[i])) i++;
 
-      // Collect body lines until we hit the action buttons
       const bodyLines: string[] = [];
       while (i < lines.length && !ACTION_LABELS.has(lines[i])) {
         bodyLines.push(lines[i]);
@@ -59,20 +47,18 @@ export class LinkedInAdapter implements PlatformAdapter {
   }
 
   async dislike(): Promise<void> {
-    // "Not interested" lives behind a "More" / "..." overflow button
     const moreBtn = findButton(this.currentElement, '…') ?? findButton(this.currentElement, 'More');
     if (!moreBtn) return;
     moreBtn.click();
     await sleep(400);
 
-    // The dropdown appears in the document (not scoped to the post)
     const item = findButton(document.body, 'Not interested') ?? findButton(document.body, 'Hide');
     item?.click();
     await sleep(400);
   }
 
   async skip(): Promise<void> {
-    // Post is already marked processed; nothing to click
+    // Already marked processed in getNextPost; nothing to click.
   }
 
   async scroll(): Promise<void> {
@@ -90,7 +76,7 @@ function findButton(root: Element | null, label: string): HTMLButtonElement | nu
     Array.from(buttons).find(
       b =>
         b.innerText.trim() === label ||
-        b.getAttribute('aria-label')?.toLowerCase().includes(label.toLowerCase())
+        b.getAttribute('aria-label')?.toLowerCase().includes(label.toLowerCase()),
     ) ?? null
   );
 }
